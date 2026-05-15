@@ -1,14 +1,17 @@
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
-  vite: {
-    base: '/',
+  base: '/', // ✅ for tamal103.github.io
+
+  plugins: [
+    react(),
+    tailwindcss(),
+  ],
+
+  build: {
+    outDir: 'dist',
+    emptyOutDir: true,
   },
-  tanstackStart: {
-    server: { 
-      entry: "server",
-      // Add this line to force static generation for GitHub
-      preset: 'github-pages' 
-    },
-  },
-});
+})
