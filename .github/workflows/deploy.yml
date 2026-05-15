@@ -24,24 +24,34 @@ jobs:
 
       - name: Build project
         run: bun run build
+        env:
+          # Force the static preset during the CI build
+          NITRO_PRESET: github-pages
 
-      - name: Prepare static files
-        # This part ensures that if there's no index.html in the root of the folder, 
-        # we try to find it or use a 404 fallback for routing.
+      - name: Locate and Move Static Files
         run: |
-          if [ -d "dist/client" ]; then
-            cp dist/client/index.html dist/client/404.html || true
-            echo "Using dist/client"
-          elif [ -d ".output/public" ]; then
-            cp .output/public/index.html .output/public/404.html || true
-            echo "Using .output/public"
+          mkdir -p final_site
+          
+          # Check all possible output locations for TanStack/Vinxi
+          if [ -d ".output/public" ]; then
+            cp -r .output/public/* final_site/
+          elif [ -d "dist/client" ]; then
+            cp -r dist/client/* final_site/
           fi
+
+          # Ensure index.html exists. If it's missing, the site will 404.
+          if [ ! -f "final_site/index.html" ]; then
+            echo "Searching for hidden index.html..."
+            find . -name "index.html" -not -path "./node_modules/*" -exec cp {} final_site/ \;
+          fi
+
+          # Add 404.html so refreshing internal pages doesn't break
+          cp final_site/index.html final_site/404.html || true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # We use a conditional path check
-          path: './dist/client'
+          path: './final_site'
 
   deploy:
     needs: build
