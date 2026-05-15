@@ -22,14 +22,17 @@ jobs:
       - name: Install dependencies
         run: bun install
 
-      - name: Build project
+      - name: Build Static Site
+        # This environment variable forces TanStack/Vinxi to create an index.html
         run: bun run build
+        env:
+          NITRO_PRESET: github-pages
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # Based on your build log, the static files are here:
-          path: './dist/client'
+          # When using the github-pages preset, files move to this specific folder
+          path: './.output/public'
 
   deploy:
     needs: build
