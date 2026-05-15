@@ -1,12 +1,234 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tamal Portfolio</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Tamal Roy — Full-Stack Software Developer</title>
+<meta name="description" content="Full-stack developer with 7+ years building mission-critical web applications, ERP systems, and APIs. Based in Klagenfurt, Austria." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0e0e10; --fg:#f5f5f4; --muted:#a1a1aa; --border:#27272a;
+    --primary:#f59e0b; --surface:#17171a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--fg);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .display{font-family:'Poppins',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05}
+  .mono{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase}
+  .container{max-width:1100px;margin:0 auto;padding:0 24px}
+  a{color:inherit;text-decoration:none;transition:.2s}
+  .text-primary{color:var(--primary)}
+  .text-muted{color:var(--muted)}
+  /* Nav */
+  header.nav{position:fixed;top:0;left:0;right:0;z-index:50;backdrop-filter:blur(12px);background:rgba(14,14,16,.7);border-bottom:1px solid var(--border)}
+  header.nav .container{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;font-size:14px}
+  header.nav .links{display:flex;gap:32px;color:var(--muted)}
+  header.nav .links a:hover{color:var(--fg)}
+  header.nav .brand{font-family:'Poppins',sans-serif;font-weight:700;font-size:18px}
+  header.nav .email{color:var(--primary)}
+  @media(max-width:720px){header.nav .links{display:none}}
+  /* Sections */
+  section{padding:96px 24px;border-top:1px solid var(--border)}
+  #top{padding-top:160px;border-top:0}
+  .grid3{display:grid;grid-template-columns:1fr 2fr;gap:48px}
+  @media(max-width:720px){.grid3{grid-template-columns:1fr}}
+  /* Hero */
+  .hero{display:grid;grid-template-columns:1fr auto;gap:48px;align-items:end}
+  .hero h1{font-size:clamp(40px,7vw,96px)}
+  .hero p.lede{max-width:560px;color:var(--muted);font-size:18px;margin-top:24px}
+  .hero .portrait{position:relative;width:220px;flex-shrink:0}
+  .hero .portrait .shadow{position:absolute;inset:0;transform:translate(12px,12px);background:rgba(245,158,11,.3);border-radius:6px}
+  .hero .portrait img{position:relative;width:100%;border-radius:6px;filter:grayscale(100%);transition:.5s}
+  .hero .portrait img:hover{filter:grayscale(0)}
+  @media(max-width:720px){.hero{grid-template-columns:1fr}.hero .portrait{width:160px}}
+  /* About */
+  .about-lead{font-family:'Poppins',sans-serif;font-weight:600;font-size:24px;color:var(--fg);line-height:1.35}
+  .about p{color:var(--muted);font-size:18px;margin-top:24px}
+  .meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+  /* Work */
+  h2.section{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(28px,4vw,48px);line-height:1.1}
+  .job{display:grid;grid-template-columns:1fr 2fr;gap:32px;padding:40px 0;border-top:1px solid var(--border)}
+  @media(max-width:720px){.job{grid-template-columns:1fr}}
+  .job h3{font-family:'Poppins',sans-serif;font-weight:600;font-size:24px;margin-bottom:4px}
+  .job ul{list-style:none;margin-top:20px}
+  .job li{display:flex;gap:12px;color:var(--muted);margin-bottom:8px}
+  .job li::before{content:"—";color:var(--primary);flex-shrink:0;margin-top:6px}
+  /* Projects */
+  .projects{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border:1px solid var(--border)}
+  @media(max-width:720px){.projects{grid-template-columns:1fr}}
+  .project{background:var(--bg);padding:32px;transition:.2s}
+  .project:hover{background:var(--surface)}
+  .project .name{font-family:'Poppins',sans-serif;font-weight:600;font-size:22px;margin-bottom:12px}
+  .project p{color:var(--muted)}
+  /* Skills */
+  .skills{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+  @media(max-width:900px){.skills{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.skills{grid-template-columns:1fr}}
+  .skill{border-top:1px solid var(--border);padding-top:20px}
+  .skill .label{color:var(--primary);margin-bottom:14px}
+  .skill .items{display:flex;flex-wrap:wrap;gap:8px 12px;font-size:14px}
+  /* Contact */
+  .contact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:780px}
+  @media(max-width:720px){.contact-grid{grid-template-columns:1fr}}
+  .contact-card{border:1px solid var(--border);padding:24px;transition:.2s}
+  .contact-card:hover{border-color:var(--primary)}
+  .contact-card:hover .val{color:var(--primary)}
+  .contact-card .label{color:var(--muted);margin-bottom:8px}
+  h2.huge{font-family:'Poppins',sans-serif;font-weight:700;font-size:clamp(40px,7vw,96px);line-height:1;margin-bottom:48px}
+  footer{border-top:1px solid var(--border);padding:32px 24px}
+  footer .container{display:flex;justify-content:space-between;gap:16px;font-size:13px;color:var(--muted);flex-wrap:wrap}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container">
+    <a href="#top" class="brand">Tamal Roy</a>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="mailto:tamaldx@gmail.com" class="email">tamaldx@gmail.com</a>
+  </div>
+</header>
+
+<section id="top">
+  <div class="container hero">
+    <div>
+      <p class="mono text-primary" style="margin-bottom:24px">Klagenfurt am Wörthersee · Austria</p>
+      <h1 class="display">Full-stack developer<br>building <span class="text-primary">mission-critical</span><br>web platforms.</h1>
+      <p class="lede">7+ years shipping ERP systems, APIs, and CMS platforms for international organizations including IUCN, B-cause Inc and UPS. Currently pursuing an MSc in Communication Engineering at FH Kärnten.</p>
+    </div>
+    <div class="portrait">
+      <div class="shadow"></div>
+      <img src="tamal-portrait.jpg" alt="Portrait of Tamal Roy">
+    </div>
+  </div>
+</section>
+
+<section id="about" class="about">
+  <div class="container grid3">
+    <div class="mono text-muted">01 / Profile</div>
+    <div>
+      <p class="about-lead">Results-driven full-stack developer seeking a software role in the DACH region where backend and CMS expertise meet high-impact digital products.</p>
+      <p>I work across the stack — from Drupal, Java, and .NET backends to Android field applications, multilingual ERP platforms, and the database tier. My strongest signal is ownership: a zero-data-loss platform migration serving 1,400+ organisations globally, API-driven Android field apps with GPS geo-fencing, real-time task management, and photo-proof audit trails for nationwide operations, and production systems that simply could not afford to go down. I ship with confidence using CI/CD pipelines via GitLab CI and GitHub Actions.</p>
+      <div class="meta-grid">
+        <div>
+          <div class="mono text-primary" style="margin-bottom:8px">Now</div>
+          <div>MSc, FH Kärnten</div>
+          <div class="text-muted" style="font-size:14px">Communication Engineering</div>
+        </div>
+        <div>
+          <div class="mono text-primary" style="margin-bottom:8px">Languages</div>
+          <div>EN C2 · DE A1.2 · BN Native</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="container">
+    <div class="grid3" style="margin-bottom:64px">
+      <div class="mono text-muted">02 / Experience</div>
+      <h2 class="section">Seven years across three<br>engineering organizations.</h2>
+    </div>
+    <div id="jobs"></div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="grid3" style="margin-bottom:64px">
+      <div class="mono text-muted">03 / Selected work</div>
+      <h2 class="section">Things I've built.</h2>
+    </div>
+    <div class="projects" id="projects"></div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="container">
+    <div class="grid3" style="margin-bottom:64px">
+      <div class="mono text-muted">04 / Toolkit</div>
+      <h2 class="section">Stack &amp; capabilities.</h2>
+    </div>
+    <div class="skills" id="skillsGrid"></div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="container">
+    <div class="mono text-muted" style="margin-bottom:32px">05 / Contact</div>
+    <h2 class="huge">Let's build something<br><span class="text-primary">reliable</span> together.</h2>
+    <div class="contact-grid">
+      <a href="mailto:tamaldx@gmail.com" class="contact-card">
+        <div class="mono label">Email</div><div class="val">tamaldx@gmail.com</div>
+      </a>
+      <a href="tel:+4369020085160" class="contact-card">
+        <div class="mono label">Phone</div><div class="val">+43 690 20085160</div>
+      </a>
+      <a href="https://linkedin.com/in/tamalroy" target="_blank" rel="noreferrer" class="contact-card">
+        <div class="mono label">LinkedIn</div><div class="val">in/tamalroy</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div>© <span id="year"></span> Tamal Roy. Klagenfurt, Austria.</div>
+    <div class="mono">Available for opportunities in DACH</div>
+  </div>
+</footer>
+
+<script>
+const experience = [
+  {role:"Information Systems Developer",company:"IUCN — International Union for Conservation of Nature",period:"Sep 2022 — Oct 2025",location:"Dhaka, Bangladesh",bullets:["Core member of the HQ Global Information Systems group, maintaining web apps for IUCN's network of 1,400+ member organizations.","Led full migration of the IUCN Library System from Drupal 7 to Drupal 10 with zero data loss and measurable performance gains.","Owned the IUCN Accounts Module end-to-end across reliability, new business requirements, and platform integrations.","Represented the GIS team at HQ strategy conferences in Gland, Switzerland (2022, 2024)."]},
+  {role:"Software Developer",company:"Air Alliance Ltd. (UPS Bangladesh)",period:"May 2019 — Aug 2022",location:"Dhaka, Bangladesh",bullets:["Designed and deployed a nationwide API-based Android app replacing legacy TUNDRA handheld devices for real-time parcel tracking.","Built upsbd-pickup.com from scratch, letting customers self-schedule pickups and reducing call center load.","Delivered ERP enhancements, API integrations, and custom reporting tools for Customer Care and Operations.","Awarded Employee of the Quarter for the Expedited Tracking Tool."]},
+  {role:"Software Developer",company:"B-Cause Bangladesh Ltd.",period:"May 2017 — May 2019",location:"Dhaka, Bangladesh",bullets:["Contributed to the full SDLC of a multilingual API-based ERP for the translation industry across Japan, China, Korea, and the Philippines.","Built and optimized multilingual platforms: transpro.com.au, transpro.cn, b-cause-erp.com.","Managed servers in Bangladesh, Japan, and Germany; handled deployments and cross-region security.","Mentored junior and intern developers; led overseas client communication."]},
+];
+const projects = [
+  {name:"Library System Migration",detail:"Drupal 7 → Drupal 10 migration with zero data loss for IUCN's global member network."},
+  {name:"TPD (Tundra Pickup & Delivery) Mobile Application",detail:"Engineered a nationwide Android solution for UPS to replace legacy TUNDRA devices, modernizing the entire pickup and delivery workflow. The application integrated real-time API synchronization and barcode scanning, allowing customers to track parcels live during field operations. This automation significantly increased logistical efficiency and remains a core component of the UPS courier business in Bangladesh."},
+  {name:"UPS BD Online Pickup",detail:"Customer-facing self-service pickup scheduler at upsbd-pickup.com."},
+  {name:"Multilingual Translation ERP",detail:"API-based ERP serving translation clients across Japan, China, Korea, and the Philippines."},
+  {name:"Embedded Android Applications",detail:"Multiple embedded Android applications built for field operations and integrated hardware workflows."},
+  {name:"Grameenphone Field Marketing Automation",detail:"Developed a field-service Android app to manage the nationwide deployment of billboards and branding assets for Grameenphone. The system allows team leads to assign daily retail routes while agents track inventory and tasks in real-time. By requiring geo-tagged photo confirmation for every shop visit, the application ensures high execution standards and provides a transparent audit trail for marketing campaigns."},
+  {name:"Samsung Field Marketing Automation",detail:"Engineered an API-driven Android application for Samsung's nationwide operations to digitize complex field marketing and logistics. Integrated GPS geo-fencing for verified attendance and route tracking, ensuring full visibility into team movements and shop visits. The solution features a real-time inventory and task management system where agents receive supervisor assignments and track marketing collateral on-site. To ensure compliance, implemented photo-proof confirmation with location-stamping, providing a transparent audit trail from morning check-in to final product placement."},
+];
+const skills = {
+  Backend:["PHP","Python","C#","Java","CodeIgniter","Laravel","ASP.NET","Drupal"],
+  Frontend:["JavaScript","Angular","AJAX","CSS","TWIG","JSON","XML","XSLT"],
+  Databases:["MySQL","PostgreSQL","MS SQL Server","Oracle","CouchDB"],
+  Mobile:["Android (Java)","Google APIs","REST integration"],
+  DevOps:["Git","Linux/Windows admin","Cross-region deployments"],
+  Other:["UML","ERP systems","Agile / SDLC","API design","Multilingual platforms"],
+};
+const esc = s => s.replace(/[&<>"]/g,c=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+document.getElementById("jobs").innerHTML = experience.map(j=>`
+  <article class="job">
+    <div>
+      <div class="mono text-primary">${esc(j.period)}</div>
+      <div class="text-muted" style="margin-top:8px;font-size:14px">${esc(j.location)}</div>
+    </div>
+    <div>
+      <h3>${esc(j.role)}</h3>
+      <div class="text-muted" style="margin-bottom:20px">${esc(j.company)}</div>
+      <ul>${j.bullets.map(b=>`<li>${esc(b)}</li>`).join("")}</ul>
+    </div>
+  </article>`).join("");
+document.getElementById("projects").innerHTML = projects.map(p=>`
+  <div class="project"><div class="name">${esc(p.name)}</div><p>${esc(p.detail)}</p></div>`).join("");
+document.getElementById("skillsGrid").innerHTML = Object.entries(skills).map(([cat,items])=>`
+  <div class="skill"><div class="mono label">${esc(cat)}</div>
+    <div class="items">${items.map(i=>`<span>${esc(i)}</span>`).join("")}</div></div>`).join("");
+document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
 </html>
