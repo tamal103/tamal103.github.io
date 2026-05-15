@@ -10,9 +10,9 @@ import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 // @cloudflare/vite-plugin builds from this — wrangler.jsonc main alone is insufficient.
 export default defineConfig({
   // This tells Vite the site lives in a sub-folder on GitHub
-  vite: {
-    base: '/tamal.github.io/',
-  },
+vite: {
+  base: '/', // This is much cleaner now!
+},
   tanstackStart: {
     server: { entry: "server" },
   },
